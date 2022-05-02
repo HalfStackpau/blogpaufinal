@@ -36,6 +36,17 @@ class HomeController extends Controller
         $posts = Post::all();
         return view('home', compact($posts));
     }
+    public function search(Request $request){
+        $search =  $request->search;
+        $posts = Post::where('tags',$search)->get();
+        //$posts = Post::where('title',$search)->get();
+        $users = User::all();
+
+
+        return view('home', compact(['posts', 'users']));
+
+
+    }
 
 
 }

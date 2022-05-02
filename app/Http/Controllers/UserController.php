@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Comment;
+use App\User;
 
-class CommentController extends Controller
+
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +19,8 @@ class CommentController extends Controller
     public function index()
     {
         //
+        $user = Auth::user();
+        return view('profile', compact(['user']));
     }
 
     /**
@@ -37,22 +41,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user()->id;
-
-
-        
-        $create = Comment::create([
-            'comments'=>  $request->comment,
-            'created_at'=> date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'user_id'=> $user,
-            'post_id'=> $request->idpost
-
-        ]);
-
-        $create->save();
-
-        return redirect("/post/$request->idpost");
+        //
     }
 
     /**
@@ -84,9 +73,16 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $user = User::find($request->iduser);
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->save();
+
+        return view('profile', compact(['user']));
+
     }
 
     /**
@@ -98,8 +94,5 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
-        $post = Comment::find($id);
-        $post->delete();
-        return back();
     }
 }

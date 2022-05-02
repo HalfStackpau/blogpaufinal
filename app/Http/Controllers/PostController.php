@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Post;
 use App\Comment;
+use App\User;
 
 class PostController extends Controller
 {
@@ -45,6 +46,8 @@ class PostController extends Controller
             'comment'=>'string|required',
             'tags'=>'string|required'
         ]);
+
+        
         $create = Post::create([
             'title'=>$validate['title'],
             'comment'=> $validate['comment'],
@@ -62,6 +65,7 @@ class PostController extends Controller
         
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -72,14 +76,22 @@ class PostController extends Controller
     {
         //
         $posts = Post::all();
-        return view('home', ['posts' => $posts] );
+        $users = User::all();
+
+        return view('home', compact(['posts','users']));
     }
     public function getOnePost($id){
         $post = Post::find($id);
-        $user = Auth::user();
+        $user = User::all();
         $comments = Comment::where('post_id',$post->id)->get();
 
-        return view('post.comment', ['post'=>$post, 'user'=>$user]);
+        return view('post.comment', ['post'=>$post, 'users'=>$user, 'comments'=>$comments, 'authuser'=>Auth::user()->id]);
+    }
+    public function mypost(){
+        $posts = Post::where('user_id',Auth::user()->id)->get();
+        $users = User::all();
+
+        return view('post.mypost', compact(['posts', 'users']));
     }
     /**
      * Show the form for editing the specified resource.

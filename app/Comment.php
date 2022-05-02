@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 use App\Post;
+use App\User;
 
 class Comment extends Model
 {
@@ -17,7 +18,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'comments','user_id','post_id','created_at','updated_at'
+        'comments','user_id','post_id', 'created_at', 'updated_at'
     ];
     
     public function post(){
