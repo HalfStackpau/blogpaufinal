@@ -56,6 +56,24 @@ class PostController extends Controller
             'created_at'=> date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+        $newTag = new TagController();
+        $array = "";
+        $stringtag = trim($request->tags);
+        for($i = 0; $i<=strlen($stringtag)-1;$i++){
+            if($stringtag[$i] === " "){
+                $newTag->store($array, $create->id);
+                $array = "";
+            }
+            if($stringtag[$i] !== " "){
+                $array .= $stringtag[$i];
+            
+            }
+        }
+        if(strlen($array) > 0){
+            $newTag->store($array, $create->id);
+        }
+        
+        
 
         $create->save();
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Post;
 use App\User;
+use App\Tag;
 
 class HomeController extends Controller
 {
@@ -38,8 +39,14 @@ class HomeController extends Controller
     }
     public function search(Request $request){
         $search =  $request->search;
-        $posts = Post::where('tags',$search)->get();
-        //$posts = Post::where('title',$search)->get();
+        $tags = Tag::where('tag', $search)->get();
+        $posts = [];
+        foreach($tags as $tag  ){
+            $array = Post::where('id',$tag->idpost)->get()[0];
+            $posts[] = $array;
+        }
+        //$posts = Post::where('id',33)->get();
+        /*$posts = Post::where('title',$search)->get();*/
         $users = User::all();
 
 

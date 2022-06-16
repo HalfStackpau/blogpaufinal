@@ -17,6 +17,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('tag',45);
             $table->timestamps();
+            $table->string('idpost',45);
         });
     }
 

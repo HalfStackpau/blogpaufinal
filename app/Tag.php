@@ -15,6 +15,8 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'title','comment','user_id'
+        'tag',"idpost"
     ];
-}
+
+
+}   

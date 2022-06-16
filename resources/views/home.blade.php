@@ -7,9 +7,10 @@
         <form class="form-class p-2" id="formsearch" method="POST" action={{route('search')}}>
             @method('POST')
             @csrf
-            <input type="text" class="form-control" id="search" name="search" aria-describedby="emailHelp" placeholder="Write a comment">
+            <input type="text" class="form-control" id="search" name="search" aria-describedby="emailHelp" placeholder="Search by Tag">
 
         </form>
+        
         @foreach ($posts as $post)
 
             <div class="card">
@@ -29,8 +30,8 @@
 
                     <p>{{ $post->comment }}</p>
                     <p>Tags:{{ $post->tags }}</p>
-                    <button type="button" class="btn btn-secondary">
-                    <a class="dropdown-item" href="{{ route('post',$post->id) }}">
+                    <button type="button" class="btn" style="background:#90A5D5;">
+                    <a style="color:white; text-decoration:none;" href="{{ route('post',$post->id) }}">
                     Comment
                     </a >
                     </button>
